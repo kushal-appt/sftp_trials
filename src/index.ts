@@ -2,6 +2,7 @@ import Client from 'ssh2-sftp-client';
 import { SFTPClientOptions } from './types.js';
 import fs from "fs/promises";
 import path from "path";
+import config from './config.js';
 
 
 async function isExists(path: string) {
@@ -42,6 +43,7 @@ class SFTPClient {
     } catch (err) {
       console.log('Listing failed:', err);
     }
+
     if (!fileObjects) {
       throw new Error(`File objects are empty`);
     }
@@ -83,10 +85,10 @@ class SFTPClient {
 (async () => {
   const client = new SFTPClient();
   await client.connect({
-    host: 'localhost',
-    port: 2222,
-    username: 'foo',
-    password: 'pass',
+    host: config.host,
+    port: Number(config.port),
+    username: config.username,
+    password: config.password,
   });
 
   //await client.listFiles('.');

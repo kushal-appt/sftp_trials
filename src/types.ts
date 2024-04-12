@@ -1,6 +1,6 @@
 export type SFTPClientOptions = {
-  host: 'localhost';
-  port: 2222;
-  username: 'foo';
-  password: 'pass';
+  host: string;
+  port: number;
+  username?: string;
+  password?: string;
 };
