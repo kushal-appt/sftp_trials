@@ -75,7 +75,7 @@ class SFTPClient {
     }
     console.log(`Uploading ${localFile} to ${remoteFile} ...`);
     try {
-      await this.client.put(dirname, remoteFile);
+      await this.client.put(localFile, remoteFile);
     } catch (err) {
       console.error('Uploading failed:', err);
     }
@@ -92,6 +92,6 @@ class SFTPClient {
   });
 
   //await client.listFiles('.');
-  await client.uploadFile('./local.txt', '/upload/remote.txt');
+  await client.uploadFile('/home/kushal/Work/POC/sftp/src/local.txt', '/upload/remote.txt');
   await client.disconnect();
 })();
