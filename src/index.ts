@@ -64,7 +64,16 @@ class SFTPClient {
       fileNames.push(file.name);
     }
 
-    return fileNames;
+    console.log(fileNames);
+  }
+
+  async deleteFile(remoteFile: string) {
+    console.log(`Deleting ${remoteFile}...`)
+    try {
+      await this.client.delete(remoteFile)
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   async uploadFile(localFile: string, remoteFile: string) {
@@ -80,6 +89,14 @@ class SFTPClient {
       console.error('Uploading failed:', err);
     }
   }
+
+  async downloadFile(remoteFile: string, localFile: string) {
+    try {
+      await this.client.get(remoteFile, localFile)
+    } catch(err) {
+      console.log(err)
+    }
+  }
 }
 
 (async () => {
@@ -91,7 +108,9 @@ class SFTPClient {
     password: config.password,
   });
 
-  //await client.listFiles('.');
+  //await client.listFiles('./upload');
+  //await client.deleteFile('./upload/remote.txt')
   await client.uploadFile('/home/kushal/Work/POC/sftp/src/local.txt', '/upload/remote.txt');
+  //await client.downloadFile("./upload/remote.txt", "C:\Users\Kushal Kake\Desktop\sftp downloads")
   await client.disconnect();
 })();
